@@ -1,6 +1,33 @@
 #!/bin/bash
 #chmod a+x NormalizeAndTrimForMacOS.command
 
+# Check and install dependencies
+echo "Checking dependencies..."
+
+# Check if Homebrew is installed
+if ! command -v brew &> /dev/null; then
+    echo "Homebrew not found. Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Check and install sox
+if ! command -v sox &> /dev/null; then
+    echo "sox not found. Installing sox..."
+    brew install sox
+else
+    echo "sox is already installed."
+fi
+
+# Check and install ffmpeg
+if ! command -v ffmpeg &> /dev/null; then
+    echo "ffmpeg not found. Installing ffmpeg..."
+    brew install ffmpeg
+else
+    echo "ffmpeg is already installed."
+fi
+
+echo "All dependencies are ready."
+echo ""
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
