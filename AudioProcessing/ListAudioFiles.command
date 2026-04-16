@@ -33,10 +33,13 @@ find . -type f \( -iname "*.mp3" -o -iname "*.wav" \) | while IFS= read -r filep
     # Get file size in bytes
     filesize=$(stat -f%z "$filepath")
     
-    # Get audio duration using ffprobe
+    # Get audio duration in seconds using ffprobe
     duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$filepath" 2>/dev/null)
     if [ -z "$duration" ]; then
         duration="N/A"
+    else
+        # Format to 2 decimal places
+        duration=$(printf "%.2f" "$duration")
     fi
     
     # Escape quotes in case they exist in filenames
